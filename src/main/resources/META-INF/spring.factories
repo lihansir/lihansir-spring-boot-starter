@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.lihansir.platform.starter.autoconfigure.LiHanSirCloudAutoConfiguration
