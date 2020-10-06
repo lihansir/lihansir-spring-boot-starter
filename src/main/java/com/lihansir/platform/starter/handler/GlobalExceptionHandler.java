@@ -15,12 +15,10 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -71,6 +69,23 @@ public class GlobalExceptionHandler {
 
     /**
      * <p>
+     * MissingServletRequestParameterException
+     * </p>
+     *
+     * @author <a href="https://www.lihansir.com">Li Han</a>
+     * @date Created in 2020/10/06 17:09
+     * @param e
+     *             MissingServletRequestParameterException
+     * @return Unified response
+     */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public RestResult<Object> missingServletRequestParameterException(MissingServletRequestParameterException e) {
+        log.debug("MissingServletRequestParameterException: 【{}】", e.getMessage());
+        return RestResult.failedWithMsg(CommonCode.PARAM_CHECK_ERROR.getCode(), e.getMessage());
+    }
+
+    /**
+     * <p>
      * Request path error
      * </p>
      *
@@ -96,9 +111,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public RestResult<Object> validatedBindException(BindException e) {
-        List<String> errorList = e.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage)
-            .collect(Collectors.toList());
-        String errorMsg = ArrayUtil.join(errorList.toArray(), ",");
+        String errorMsg = ArrayUtil.join(e.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray(), ",");
         log.debug("Custom validation exception：【{}】", errorMsg);
         return RestResult.failedWithMsg(CommonCode.PARAM_CHECK_ERROR.getCode(), errorMsg);
     }
