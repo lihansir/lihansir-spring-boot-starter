@@ -1,0 +1,26 @@
+{
+  "groups": [
+    {
+      "name": "cloud.jwt.util",
+      "type": "com.lihansir.platform.starter.utils.TokenOpsUtil",
+      "sourceType": "com.lihansir.platform.starter.utils.TokenOpsUtil"
+    }
+  ],
+  "properties": [
+    {
+      "name": "cloud.jwt.util.secret",
+      "type": "java.lang.String",
+      "description": "jwt secret.",
+      "sourceType": "com.lihansir.platform.starter.utils.TokenOpsUtil",
+      "defaultValue": "lihansircloudplatformaaaaaaaaaaaabbbbbbbbbbbbbb"
+    },
+    {
+      "name": "cloud.jwt.util.expirationTimeInSecond",
+      "type": "java.lang.Long",
+      "description": "Validity period (two weeks by default) in seconds.",
+      "sourceType": "com.lihansir.platform.starter.utils.TokenOpsUtil",
+      "defaultValue": 1209600
+    }
+  ],
+  "hints": []
+}

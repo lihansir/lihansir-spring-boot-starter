@@ -5,7 +5,7 @@
 package com.lihansir.platform.starter.utils;
 
 import org.springframework.data.redis.core.RedisTemplate;
-
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
  * @date Created in 2020/10/05 12:11
- **/
+ */
 public class RedisOpsUtil {
 
     private RedisTemplate<String, Object> redisTemplate;
@@ -147,22 +147,62 @@ public class RedisOpsUtil {
         return redisTemplate.opsForList().index(key, index);
     }
 
-    public Long lPush(String key, Object value) {
+    public Long rPush(String key, Object value) {
         return redisTemplate.opsForList().rightPush(key, value);
     }
 
-    public Long lPush(String key, Object value, long time) {
+    public Long rPush(String key, Object value, long time) {
         Long index = redisTemplate.opsForList().rightPush(key, value);
         expire(key, time);
         return index;
     }
 
-    public Long lPushAll(String key, Object... values) {
+    public Long rPushAll(String key, Object... values) {
         return redisTemplate.opsForList().rightPushAll(key, values);
     }
 
-    public Long lPushAll(String key, Long time, Object... values) {
+    public Long rPushAllList(String key, Collection<Object> values) {
+        return redisTemplate.opsForList().rightPushAll(key, values);
+    }
+
+    public Long rPushAll(String key, Long time, Object... values) {
         Long count = redisTemplate.opsForList().rightPushAll(key, values);
+        expire(key, time);
+        return count;
+    }
+
+    public Long rPushAllList(String key, Long time, Collection<Object> values) {
+        Long count = redisTemplate.opsForList().rightPushAll(key, values);
+        expire(key, time);
+        return count;
+    }
+
+    public Long lPush(String key, Object value) {
+        return redisTemplate.opsForList().leftPush(key, value);
+    }
+
+    public Long lPush(String key, Object value, long time) {
+        Long index = redisTemplate.opsForList().leftPush(key, value);
+        expire(key, time);
+        return index;
+    }
+
+    public Long lPushAll(String key, Object... values) {
+        return redisTemplate.opsForList().leftPushAll(key, values);
+    }
+
+    public Long lPushAllList(String key, Collection<Object> values) {
+        return redisTemplate.opsForList().leftPushAll(key, values);
+    }
+
+    public Long lPushAll(String key, Long time, Object... values) {
+        Long count = redisTemplate.opsForList().leftPushAll(key, values);
+        expire(key, time);
+        return count;
+    }
+
+    public Long lPushAllList(String key, Long time, Collection<Object> values) {
+        Long count = redisTemplate.opsForList().leftPushAll(key, values);
         expire(key, time);
         return count;
     }

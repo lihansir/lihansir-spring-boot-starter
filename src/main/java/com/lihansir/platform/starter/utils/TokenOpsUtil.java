@@ -12,7 +12,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
-
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
@@ -25,7 +24,7 @@ import java.util.Map;
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
  * @date Created in 2020/10/05 11:43
- **/
+ */
 public class TokenOpsUtil {
 
     /**
@@ -36,7 +35,7 @@ public class TokenOpsUtil {
      * @author <a href="https://www.lihansir.com">Li Han</a>
      * @date Created in 2020/10/05 11:45
      */
-    @Value("${jwt.secret:lihansircloudplatformaaaaaaaaaaaabbbbbbbbbbbbbb}")
+    @Value("${cloud.jwt.secret:lihansircloudplatformaaaaaaaaaaaabbbbbbbbbbbbbb}")
     private String secret;
 
     /**
@@ -47,7 +46,7 @@ public class TokenOpsUtil {
      * @author <a href="https://www.lihansir.com">Li Han</a>
      * @date Created in 2020/10/05 11:45
      */
-    @Value("${jwt.expirationTimeInSecond:1209600}")
+    @Value("${cloud.jwt.expirationTimeInSecond:1209600}")
     private Long expirationTimeInSecond;
 
     /**
@@ -58,7 +57,7 @@ public class TokenOpsUtil {
      * @author <a href="https://www.lihansir.com">Li Han</a>
      * @date Created in 2020/10/05 12:02
      * @param token
-     *             Token string
+     *            Token string
      * @return Data map
      */
     public Map<String, Object> getDataFromToken(String token) {

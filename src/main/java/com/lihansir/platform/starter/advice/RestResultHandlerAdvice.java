@@ -17,7 +17,6 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-
 import java.lang.reflect.AnnotatedElement;
 import java.util.Objects;
 
@@ -28,7 +27,7 @@ import java.util.Objects;
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
  * @date Created in 2020/10/05 12:35
- **/
+ */
 @ControllerAdvice
 public class RestResultHandlerAdvice implements ResponseBodyAdvice<Object> {
 

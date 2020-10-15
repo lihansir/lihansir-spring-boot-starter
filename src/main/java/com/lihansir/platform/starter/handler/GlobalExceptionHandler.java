@@ -27,7 +27,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
  * @date Created in 2020/10/05 12:17
- **/
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -75,7 +75,7 @@ public class GlobalExceptionHandler {
      * @author <a href="https://www.lihansir.com">Li Han</a>
      * @date Created in 2020/10/06 17:09
      * @param e
-     *             MissingServletRequestParameterException
+     *            MissingServletRequestParameterException
      * @return Unified response
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
@@ -111,7 +111,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public RestResult<Object> validatedBindException(BindException e) {
-        String errorMsg = ArrayUtil.join(e.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray(), ",");
+        String errorMsg = ArrayUtil
+            .join(e.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray(), ",");
         log.debug("Custom validation exception：【{}】", errorMsg);
         return RestResult.failedWithMsg(CommonCode.PARAM_CHECK_ERROR.getCode(), errorMsg);
     }

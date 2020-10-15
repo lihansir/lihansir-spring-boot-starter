@@ -14,7 +14,6 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -29,7 +28,7 @@ import com.lihansir.platform.starter.utils.RedisOpsUtil;
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
  * @date Created in 2020/10/05 11:39
- **/
+ */
 @Configuration
 public class LiHanSirCloudAutoConfiguration {
 
