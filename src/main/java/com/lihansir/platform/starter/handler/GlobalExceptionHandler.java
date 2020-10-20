@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public RestResult<Object> businessException(BusinessException e) {
-        log.debug("Business processing error，Error status code：【{}】,Cause of error：【{}】", e.getCode(), e.getMsg());
+        log.error("Business processing error，Error status code：【{}】,Cause of error：【{}】", e.getCode(), e.getMsg());
         return RestResult.failedWithMsg(e.getCode(), e.getMsg());
     }
 
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ParamException.class)
     public RestResult<Object> paramException(ParamException e) {
-        log.debug("Parameter verification error，Error status code：【{}】,Cause of error：【{}】", e.getCode(), e.getMsg());
+        log.error("Parameter verification error，Error status code：【{}】,Cause of error：【{}】", e.getCode(), e.getMsg());
         return RestResult.failedWithMsg(e.getCode(), e.getMsg());
     }
 
@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public RestResult<Object> missingServletRequestParameterException(MissingServletRequestParameterException e) {
-        log.debug("MissingServletRequestParameterException: 【{}】", e.getMessage());
+        log.error("MissingServletRequestParameterException: 【{}】", e.getMessage());
         return RestResult.failedWithMsg(CommonCode.PARAM_CHECK_ERROR.getCode(), e.getMessage());
     }
 
@@ -113,7 +113,7 @@ public class GlobalExceptionHandler {
     public RestResult<Object> validatedBindException(BindException e) {
         String errorMsg = ArrayUtil
             .join(e.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray(), ",");
-        log.debug("Custom validation exception：【{}】", errorMsg);
+        log.error("Custom validation exception：【{}】", errorMsg);
         return RestResult.failedWithMsg(CommonCode.PARAM_CHECK_ERROR.getCode(), errorMsg);
     }
 
@@ -132,7 +132,7 @@ public class GlobalExceptionHandler {
     public RestResult<Object> validExceptionHandler(MethodArgumentNotValidException e) {
         assert e.getBindingResult().getFieldError() != null;
         String message = e.getBindingResult().getFieldError().getDefaultMessage();
-        log.debug("Custom validation exception：【{}】", message);
+        log.error("Custom validation exception：【{}】", message);
         return RestResult.failedWithMsg(CommonCode.PARAM_CHECK_ERROR.getCode(), message);
     }
 
@@ -149,7 +149,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public RestResult<Object> httpRequestMethodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException e) {
-        log.debug("Unsupported request method：【{}】", e.getMessage());
+        log.error("Unsupported request method：【{}】", e.getMessage());
         return RestResult.failedWithMsg(CommonCode.REQUEST_METHOD_ERROR.getCode(), e.getMessage());
     }
 
