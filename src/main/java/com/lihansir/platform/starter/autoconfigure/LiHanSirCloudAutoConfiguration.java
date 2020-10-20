@@ -4,7 +4,6 @@
 
 package com.lihansir.platform.starter.autoconfigure;
 
-import com.lihansir.platform.starter.utils.TokenOpsUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,12 +13,16 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.lihansir.platform.starter.utils.RedisOpsUtil;
+import com.lihansir.platform.starter.utils.TokenOpsUtil;
+
+import io.jsonwebtoken.Claims;
 
 /**
  * <p>
@@ -70,9 +73,13 @@ public class LiHanSirCloudAutoConfiguration {
         }
     }
 
-    @Bean
-    public TokenOpsUtil tokenOpsUtil() {
-        return new TokenOpsUtil();
+    @Configuration
+    @ConditionalOnClass(Claims.class)
+    protected static class CloudTokenAutoConfiguration {
+        @Bean
+        public TokenOpsUtil tokenOpsUtil() {
+            return new TokenOpsUtil();
+        }
     }
 
 }
