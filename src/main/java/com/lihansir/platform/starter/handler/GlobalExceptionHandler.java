@@ -31,7 +31,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * <p>
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public RestResult<Object> businessException(BusinessException e) {
-        log.error("Business processing error，Error status code：【{}】,Cause of error：【{}】", e.getCode(), e.getMsg(), e);
+        logger.error("Business processing error，Error status code：【{}】,Cause of error：【{}】", e.getCode(), e.getMsg(), e);
         return RestResult.failedWithMsg(e.getCode(), e.getMsg());
     }
 
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ParamException.class)
     public RestResult<Object> paramException(ParamException e) {
-        log.error("Parameter verification error，Error status code：【{}】,Cause of error：【{}】", e.getCode(), e.getMsg(), e);
+        logger.error("Parameter verification error，Error status code：【{}】,Cause of error：【{}】", e.getCode(), e.getMsg(), e);
         return RestResult.failedWithMsg(e.getCode(), e.getMsg());
     }
 
@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public RestResult<Object> missingServletRequestParameterException(MissingServletRequestParameterException e) {
-        log.error("MissingServletRequestParameterException: 【{}】", e.getMessage(), e);
+        logger.error("MissingServletRequestParameterException: 【{}】", e.getMessage(), e);
         return RestResult.failedWithMsg(CommonCode.PARAM_CHECK_ERROR.getCode(), e.getMessage());
     }
 
@@ -113,7 +113,7 @@ public class GlobalExceptionHandler {
     public RestResult<Object> validatedBindException(BindException e) {
         String errorMsg = ArrayUtil
             .join(e.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray(), ",");
-        log.error("Custom validation exception：【{}】", errorMsg, e);
+        logger.error("Custom validation exception：【{}】", errorMsg, e);
         return RestResult.failedWithMsg(CommonCode.PARAM_CHECK_ERROR.getCode(), errorMsg);
     }
 
@@ -132,7 +132,7 @@ public class GlobalExceptionHandler {
     public RestResult<Object> validExceptionHandler(MethodArgumentNotValidException e) {
         assert e.getBindingResult().getFieldError() != null;
         String message = e.getBindingResult().getFieldError().getDefaultMessage();
-        log.error("Custom validation exception：【{}】", message, e);
+        logger.error("Custom validation exception：【{}】", message, e);
         return RestResult.failedWithMsg(CommonCode.PARAM_CHECK_ERROR.getCode(), message);
     }
 
@@ -149,7 +149,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public RestResult<Object> httpRequestMethodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException e) {
-        log.error("Unsupported request method：【{}】", e.getMessage(), e);
+        logger.error("Unsupported request method：【{}】", e.getMessage(), e);
         return RestResult.failedWithMsg(CommonCode.REQUEST_METHOD_ERROR.getCode(), e.getMessage());
     }
 
@@ -166,7 +166,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = RuntimeException.class)
     public RestResult<Object> runtimeExceptionHandler(RuntimeException e) {
-        log.error("A runtime error occurred on the server，Cause of error：【{}】", e.getMessage(), e);
+        logger.error("A runtime error occurred on the server，Cause of error：【{}】", e.getMessage(), e);
         return RestResult.failedWithMsg(CommonCode.SERVER_ERROR.getCode(), e.getMessage());
     }
 
@@ -183,7 +183,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = IllegalArgumentException.class)
     public RestResult<Object> illegalArgumentExceptionHandler(IllegalArgumentException e) {
-        log.error("Error during inspection，Cause of error：【{}】", e.getMessage(), e);
+        logger.error("Error during inspection，Cause of error：【{}】", e.getMessage(), e);
         return RestResult.failedWithMsg(CommonCode.ILLEGAL_ARGUMENT_ERROR.getCode(), e.getMessage());
     }
 
@@ -200,7 +200,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public RestResult<Object> handleException(Exception e) {
-        log.error("Exception：【{}】", e.toString(), e);
+        logger.error("Exception：【{}】", e.toString(), e);
         return RestResult.failedWithMsg(CommonCode.SERVER_ERROR.getCode(), e.getMessage());
     }
 

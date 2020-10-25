@@ -2,6 +2,17 @@
 
 ### 1、If you want to use request uniform response
 
+Introducing dependencies to your pom.xml
+
+```
+<dependency>
+    <groupId>com.lihansir.platform</groupId>
+    <artifactId>lihansir-spring-boot-starter</artifactId>
+    <version>${latest version}</version>
+</dependency>
+```
+[click here to find the latest version](https://mvnrepository.com/artifact/com.lihansir.platform/lihansir-spring-boot-starter)
+
 Just need two annotations
 
 ```
@@ -116,3 +127,6 @@ public enum CommonCode implements RestCode {
 ```
 throw new BusinessException(CommonCode.ERROR_TOKEN);
 ```
+
+Finally, I invite you to pay attention to my personal website:
+[https://www.lihansir.com](https://www.lihansir.com)
