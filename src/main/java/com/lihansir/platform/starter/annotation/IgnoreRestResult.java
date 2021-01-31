@@ -7,12 +7,9 @@ package com.lihansir.platform.starter.annotation;
 import java.lang.annotation.*;
 
 /**
- * <p>
  * Ignore encapsulated response
- * </p>
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
- * @date Created in 2020/10/05 12:16
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(value = {ElementType.METHOD, ElementType.TYPE})

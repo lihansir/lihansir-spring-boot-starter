@@ -18,44 +18,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * <p>
  * Token operation tool class
- * </p>
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
- * @date Created in 2020/10/05 11:43
  */
 public class TokenOpsUtil {
 
     /**
-     * <p>
      * jwt secret
-     * </p>
-     *
-     * @author <a href="https://www.lihansir.com">Li Han</a>
-     * @date Created in 2020/10/05 11:45
      */
     @Value("${cloud.jwt.secret:lihansircloudplatformaaaaaaaaaaaabbbbbbbbbbbbbb}")
     private String secret;
 
     /**
-     * <p>
      * Validity period (two weeks by default) in seconds
-     * </p>
-     *
-     * @author <a href="https://www.lihansir.com">Li Han</a>
-     * @date Created in 2020/10/05 11:45
      */
     @Value("${cloud.jwt.expirationTimeInSecond:1209600}")
     private Long expirationTimeInSecond;
 
     /**
-     * <p>
      * Get data from token string
-     * </p>
      *
-     * @author <a href="https://www.lihansir.com">Li Han</a>
-     * @date Created in 2020/10/05 12:02
      * @param token
      *            Token string
      * @return Data map
@@ -77,12 +60,8 @@ public class TokenOpsUtil {
     }
 
     /**
-     * <p>
      * Generate token string by data
-     * </p>
      *
-     * @author <a href="https://www.lihansir.com">Li Han</a>
-     * @date Created in 2020/10/05 11:48
      * @param claims
      *            Information to be added
      * @return Token string containing information
@@ -100,12 +79,8 @@ public class TokenOpsUtil {
     }
 
     /**
-     * <p>
      * Verify whether it is expired
-     * </p>
      *
-     * @author <a href="https://www.lihansir.com">Li Han</a>
-     * @date Created in 2020/10/05 11:58
      * @param token
      *            Token string
      * @return true if token is expired
@@ -119,12 +94,8 @@ public class TokenOpsUtil {
     }
 
     /**
-     * <p>
      * Calculate token expiration time
-     * </p>
      *
-     * @author <a href="https://www.lihansir.com">Li Han</a>
-     * @date Created in 2020/10/05 11:46
      * @return expiration time
      */
     private Date getExpirationTime() {
@@ -132,12 +103,8 @@ public class TokenOpsUtil {
     }
 
     /**
-     * <p>
      * Get expiration date from token string
-     * </p>
      *
-     * @author <a href="https://www.lihansir.com">Li Han</a>
-     * @date Created in 2020/10/05 11:57
      * @param token
      *            Token string
      * @return Expiration date
@@ -151,19 +118,15 @@ public class TokenOpsUtil {
     }
 
     /**
-     * <p>
      * Get Claims from the token string
-     * </p>
      *
-     * @author <a href="https://www.lihansir.com">Li Han</a>
-     * @date Created in 2020/10/05 11:53
      * @param token
      *            Token string
      * @return Claims
      */
     public Claims getClaimsFromToken(String token) {
         try {
-            return Jwts.parser().setSigningKey(this.secret.getBytes()).parseClaimsJws(token).getBody();
+            return Jwts.parserBuilder().setSigningKey(this.secret.getBytes()).build().parseClaimsJws(token).getBody();
         } catch (Exception e) {
             return null;
         }

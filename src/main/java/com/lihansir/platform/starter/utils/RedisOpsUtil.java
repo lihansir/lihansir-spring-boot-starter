@@ -12,12 +12,9 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <p>
  * Redis operation tool class
- * </p>
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
- * @date Created in 2020/10/05 12:11
  */
 public class RedisOpsUtil {
 

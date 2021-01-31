@@ -11,12 +11,9 @@ import com.lihansir.platform.starter.handler.GlobalExceptionHandler;
 import com.lihansir.platform.starter.resolver.GlobalErrorViewResolver;
 
 /**
- * <p>
  * Unified response configuration class
- * </p>
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
- * @date Created in 2020/10/05 13:22
  */
 @Configuration
 public class RestResultAutoConfiguration {

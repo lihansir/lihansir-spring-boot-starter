@@ -21,12 +21,9 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.Objects;
 
 /**
- * <p>
  * Global unified response processing
- * </p>
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
- * @date Created in 2020/10/05 12:35
  */
 @ControllerAdvice
 public class RestResultHandlerAdvice implements ResponseBodyAdvice<Object> {
@@ -62,12 +59,8 @@ public class RestResultHandlerAdvice implements ResponseBodyAdvice<Object> {
     }
 
     /**
-     * <p>
      * Format unified response results
-     * </p>
-     *
-     * @author <a href="https://www.lihansir.com">Li Han</a>
-     * @date Created in 2020/10/05 12:44
+     * 
      * @param body
      *            Response body
      * @param response

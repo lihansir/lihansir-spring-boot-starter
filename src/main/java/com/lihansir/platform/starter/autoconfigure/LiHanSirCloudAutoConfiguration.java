@@ -25,24 +25,16 @@ import com.lihansir.platform.starter.utils.TokenOpsUtil;
 import io.jsonwebtoken.Claims;
 
 /**
- * <p>
  * autoconfigure main class
- * </p>
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
- * @date Created in 2020/10/05 11:39
  */
 @Configuration
 public class LiHanSirCloudAutoConfiguration {
 
     /**
-     * <p>
      * redis autoconfigure class
-     * </p>
-     *
-     * @author <a href="https://www.lihansir.com">Li Han</a>
-     * @date Created in 2020/10/05 11:39
-     **/
+     */
     @Configuration
     @ConditionalOnClass(RedisOperations.class)
     protected static class CloudRedisAutoConfiguration {

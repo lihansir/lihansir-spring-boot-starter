@@ -6,6 +6,7 @@ package com.lihansir.platform.starter.resolver;
 
 import com.alibaba.fastjson.support.spring.FastJsonJsonView;
 import com.lihansir.platform.common.code.CommonCode;
+import com.lihansir.platform.common.constant.CommonConstant;
 import com.lihansir.platform.common.utils.ServletUtil;
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorViewResolver;
 import org.springframework.http.HttpStatus;
@@ -16,12 +17,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * <p>
  * The error page throws an exception directly
- * </p>
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
- * @date Created in 2020/10/05 12:34
  */
 public class GlobalErrorViewResolver implements ErrorViewResolver {
     @Override
@@ -30,8 +28,9 @@ public class GlobalErrorViewResolver implements ErrorViewResolver {
         String requestPath = (String)model.getOrDefault("path", "/");
         FastJsonJsonView jsonView = new FastJsonJsonView();
         Map<String, Object> resultModel = new LinkedHashMap<>();
-        resultModel.put("code", CommonCode.ERROR_URL.getCode());
-        resultModel.put("msg", CommonCode.ERROR_URL.getMsg() + "，request path:【" + requestPath + "】");
+        resultModel.put(CommonConstant.REST_RESPONSE_CODE, CommonCode.ERROR_URL.getCode());
+        resultModel.put(CommonConstant.REST_RESPONSE_MESSAGE,
+            CommonCode.ERROR_URL.getMsg() + "，request path:【" + requestPath + "】");
         return new ModelAndView(jsonView, resultModel);
     }
 }
