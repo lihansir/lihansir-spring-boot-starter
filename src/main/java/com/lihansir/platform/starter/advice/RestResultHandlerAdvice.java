@@ -69,8 +69,7 @@ public class RestResultHandlerAdvice implements ResponseBodyAdvice<Object> {
      */
     private Object formatResponse(Object body, ServerHttpResponse response) {
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        RestResult<Object> restResponse =
-            new RestResult<>(CommonCode.OK.getCode(), CommonCode.OK.getMsg(), JSONObject.toJSON(body));
+        RestResult<Object> restResponse = RestResult.builder().success(true).data(JSONObject.toJSON(body)).build();
         if (body instanceof String) {
             return JSONObject.toJSONString(restResponse);
         }

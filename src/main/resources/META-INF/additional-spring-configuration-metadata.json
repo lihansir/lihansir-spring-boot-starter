@@ -1,14 +1,1 @@
-{"properties": [
-  {
-    "name": "cloud.jwt.secret",
-    "type": "java.lang.String",
-    "defaultValue": "lihansircloudplatformaaaaaaaaaaaabbbbbbbbbbbbbb",
-    "description": "jwt secret."
-  },
-  {
-    "name": "cloud.jwt.expirationTimeInSecond",
-    "type": "java.lang.Long",
-    "defaultValue": "1209600",
-    "description": "Validity period (two weeks by default) in seconds."
-  }
-]}
+{}

@@ -19,10 +19,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
-import com.lihansir.platform.starter.utils.RedisOpsUtil;
-import com.lihansir.platform.starter.utils.TokenOpsUtil;
 
-import io.jsonwebtoken.Claims;
 
 /**
  * autoconfigure main class
@@ -59,19 +56,6 @@ public class LiHanSirCloudAutoConfiguration {
             return template;
         }
 
-        @Bean
-        public RedisOpsUtil redisOpsUtil(RedisTemplate<String, Object> redisTemplate) {
-            return new RedisOpsUtil(redisTemplate);
-        }
-    }
-
-    @Configuration
-    @ConditionalOnClass(Claims.class)
-    protected static class CloudTokenAutoConfiguration {
-        @Bean
-        public TokenOpsUtil tokenOpsUtil() {
-            return new TokenOpsUtil();
-        }
     }
 
 }

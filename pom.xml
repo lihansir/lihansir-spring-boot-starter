@@ -6,7 +6,7 @@
 
     <groupId>com.lihansir.platform</groupId>
     <artifactId>lihansir-spring-boot-starter</artifactId>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
 
     <name>${project.artifactId}</name>
     <url>https://github.com/lihansir/lihansir-spring-boot-starter</url>
@@ -45,9 +45,10 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <spring-boot.version>2.4.2</spring-boot.version>
-        <lihansir-platform-common.version>1.3.0</lihansir-platform-common.version>
-        <jjwt.version>0.11.2</jjwt.version>
+        <lihansir-platform-common.version>1.3.1</lihansir-platform-common.version>
         <servlet-api.version>4.0.1</servlet-api.version>
+        <fastjson.version>1.2.76</fastjson.version>
+        <hutool.version>5.7.2</hutool.version>
     </properties>
 
     <dependencies>
@@ -93,24 +94,22 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-            <version>${jjwt.version}</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-            <version>${jjwt.version}</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
-            <version>${jjwt.version}</version>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+            <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
