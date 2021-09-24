@@ -189,9 +189,9 @@
 
     <repositories>
         <repository>
-            <id>lihan-cloud</id>
-            <name>lihansir nexus</name>
-            <url>https://maven.lihansir.com/repository/maven-public/</url>
+            <id>aliyun-flow</id>
+            <name>aliyun-flow</name>
+            <url>https://packages.aliyun.com/maven/repository/2133896-release-y0SuPm</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -275,7 +275,7 @@
             </distributionManagement>
         </profile>
         <profile>
-            <id>lihan-cloud</id>
+            <id>aliyun-flow</id>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -297,14 +297,14 @@
             </build>
             <distributionManagement>
                 <repository>
-                    <id>lihan-cloud</id>
-                    <name>lihan-cloud</name>
-                    <url>https://maven.lihansir.com/repository/maven-releases/</url>
+                    <id>aliyun-flow</id>
+                    <name>aliyun-flow</name>
+                    <url>https://packages.aliyun.com/maven/repository/2133896-release-y0SuPm</url>
                 </repository>
                 <snapshotRepository>
-                    <id>lihan-cloud</id>
-                    <name>lihan-cloud</name>
-                    <url>https://maven.lihansir.com/repository/maven-snapshots/</url>
+                    <id>aliyun-flow</id>
+                    <name>aliyun-flow</name>
+                    <url>https://packages.aliyun.com/maven/repository/2133896-snapshot-6EceL0</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>
