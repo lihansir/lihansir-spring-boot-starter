@@ -45,17 +45,17 @@ public class RestResultHandlerAdvice implements ResponseBodyAdvice<Object> {
     @Override
     @SuppressWarnings("unchecked")
     public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class aClass,
-        ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        int status = ((ServletServerHttpResponse)serverHttpResponse).getServletResponse().getStatus();
+                                  ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+        int status = ((ServletServerHttpResponse) serverHttpResponse).getServletResponse().getStatus();
         if (status == HttpStatus.NOT_FOUND.value()) {
             String requestPath = StrUtil.EMPTY;
             if (body instanceof Map) {
-                Map<String, Object> errorData = (Map<String, Object>)body;
-                requestPath = (String)errorData.getOrDefault("path", "/");
+                Map<String, Object> errorData = (Map<String, Object>) body;
+                requestPath = (String) errorData.getOrDefault("path", "/");
             }
             serverHttpResponse.setStatusCode(HttpStatus.OK);
             RestResult<Object> result = RestResult.failedWithErrorMessage(CommonCode.ERROR_URL.getErrorCode(),
-                CommonCode.ERROR_URL.getErrorMessage() + "，request path:【" + requestPath + "】");
+                    CommonCode.ERROR_URL.getErrorMessage() + "，request path:【" + requestPath + "】");
             CommonUtil.formatRestResult(result);
             LOGGER.error("Path handler not found, Path：【{}】,TraceId：【{}】", requestPath, RestResultHolder.getTraceId());
             return result;
@@ -66,31 +66,31 @@ public class RestResultHandlerAdvice implements ResponseBodyAdvice<Object> {
             return body;
         }
         UseRestResult useRestResponseType =
-            methodParameter.getExecutable().getDeclaringClass().getAnnotation(UseRestResult.class);
+                methodParameter.getExecutable().getDeclaringClass().getAnnotation(UseRestResult.class);
         if (useRestResponseType != null) {
-            return formatResponse(body, serverHttpResponse);
+            return formatResponse(body, methodParameter, serverHttpResponse);
         }
         UseRestResult responseAnnotationMethod = annotatedElement.getAnnotation(UseRestResult.class);
         if (responseAnnotationMethod != null) {
-            return formatResponse(body, serverHttpResponse);
+            return formatResponse(body, methodParameter, serverHttpResponse);
         }
         return body;
     }
 
     /**
      * Format unified response results
-     * 
-     * @param body
-     *            Response body
-     * @param response
-     *            Http response
+     *
+     * @param body            Response body
+     * @param methodParameter methodParameter
+     * @param response        Http response
      * @return Unified response object
      */
-    private Object formatResponse(Object body, ServerHttpResponse response) {
+    private Object formatResponse(Object body, MethodParameter methodParameter, ServerHttpResponse response) {
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         RestResult<Object> restResponse = RestResult.builder().success(true).data(JSONObject.toJSON(body)).build();
         CommonUtil.formatRestResult(restResponse);
-        if (body instanceof String) {
+        Class<?> parameterType = methodParameter.getParameterType();
+        if (String.class == parameterType) {
             return JSONObject.toJSONString(restResponse);
         }
         return restResponse;

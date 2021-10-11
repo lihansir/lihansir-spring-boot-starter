@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -36,44 +37,41 @@ public class GlobalExceptionHandler {
     /**
      * Business logic processing exception
      *
-     * @param e
-     *            Exception
+     * @param e Exception
      * @return Unified response
      */
     @ExceptionHandler(BusinessException.class)
     public RestResult<Object> businessException(BusinessException e) {
         LOGGER.error("Business processing error，Error status code：【{}】,TraceId：【{}】,Cause of error：【{}】",
-            e.getErrorCode(), CommonUtil.getTraceId(), e.getErrorMessage(), e);
+                e.getErrorCode(), CommonUtil.getTraceId(), e.getErrorMessage(), e);
         return CommonUtil.formatRestResult(RestResult.failedWithErrorMessage(e.getErrorCode(), e.getErrorMessage()));
     }
 
     /**
      * Abnormal parameter verification
      *
-     * @param e
-     *            Exception
+     * @param e Exception
      * @return Unified response
      */
     @ExceptionHandler(ParamException.class)
     public RestResult<Object> paramException(ParamException e) {
         LOGGER.error("Parameter verification error，Error status code：【{}】,TraceId：【{}】,Cause of error：【{}】",
-            e.getErrorCode(), CommonUtil.getTraceId(), e.getErrorMessage(), e);
+                e.getErrorCode(), CommonUtil.getTraceId(), e.getErrorMessage(), e);
         return CommonUtil.formatRestResult(RestResult.failedWithErrorMessage(e.getErrorCode(), e.getErrorMessage()));
     }
 
     /**
      * MissingServletRequestParameterException
      *
-     * @param e
-     *            MissingServletRequestParameterException
+     * @param e MissingServletRequestParameterException
      * @return Unified response
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public RestResult<Object> missingServletRequestParameterException(MissingServletRequestParameterException e) {
         LOGGER.error("MissingServletRequestParameterException: 【{}】,TraceId：【{}】", e.getMessage(),
-            CommonUtil.getTraceId(), e);
+                CommonUtil.getTraceId(), e);
         return CommonUtil.formatRestResult(
-            RestResult.failedWithErrorMessage(CommonCode.PARAM_CHECK_ERROR.getErrorCode(), e.getMessage()));
+                RestResult.failedWithErrorMessage(CommonCode.PARAM_CHECK_ERROR.getErrorCode(), e.getMessage()));
     }
 
     /**
@@ -86,20 +84,19 @@ public class GlobalExceptionHandler {
         String requestUrl = CommonUtil.getServletRequestAttributes().getRequest().getRequestURI();
         LOGGER.error("Path handler not found, Path：【{}】,TraceId：【{}】", requestUrl, CommonUtil.getTraceId());
         return CommonUtil.formatRestResult(RestResult.failedWithErrorMessage(CommonCode.ERROR_URL.getErrorCode(),
-            CommonCode.ERROR_URL.getErrorMessage() + "，request path:【" + requestUrl + "】"));
+                CommonCode.ERROR_URL.getErrorMessage() + "，request path:【" + requestUrl + "】"));
     }
 
     /**
      * Validated bind exception
      *
-     * @param e
-     *            Exception
+     * @param e Exception
      * @return Unified response
      */
     @ExceptionHandler(BindException.class)
     public RestResult<Object> validatedBindException(BindException e) {
         String errorMsg = ArrayUtil
-            .join(e.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray(), ",");
+                .join(e.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toArray(), ",");
         LOGGER.error("Custom validation exception：【{}】,TraceId：【{}】", errorMsg, CommonUtil.getTraceId(), e);
         return CommonUtil.formatRestResult(RestResult.failedWithErrorMessage(CommonCode.PARAM_CHECK_ERROR.getErrorCode(), errorMsg));
     }
@@ -107,8 +104,7 @@ public class GlobalExceptionHandler {
     /**
      * Custom validation exception
      *
-     * @param e
-     *            Exception
+     * @param e Exception
      * @return Unified response
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -119,11 +115,16 @@ public class GlobalExceptionHandler {
         return CommonUtil.formatRestResult(RestResult.failedWithErrorMessage(CommonCode.PARAM_CHECK_ERROR.getErrorCode(), message));
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public RestResult<Object> httpMessageNotReadableExceptionHandler(HttpMessageNotReadableException e) {
+        LOGGER.error("HttpMessageNotReadable exception：【{}】,TraceId：【{}】", e.getMessage(), CommonUtil.getTraceId(), e);
+        return CommonUtil.formatRestResult(RestResult.failed(CommonCode.SERVLET_ERROR));
+    }
+
     /**
      * Unsupported request method exception
      *
-     * @param e
-     *            Exception
+     * @param e Exception
      * @return Unified response
      */
     @ExceptionHandler(value = ServletException.class)
@@ -141,37 +142,34 @@ public class GlobalExceptionHandler {
     /**
      * Runtime exception
      *
-     * @param e
-     *            Exception
+     * @param e Exception
      * @return Unified response
      */
     @ExceptionHandler(value = RuntimeException.class)
     public RestResult<Object> runtimeExceptionHandler(RuntimeException e) {
         LOGGER.error("A runtime error occurred on the server，Cause of error：【{}】,TraceId：【{}】", e.getMessage(),
-            CommonUtil.getTraceId(), e);
+                CommonUtil.getTraceId(), e);
         return CommonUtil.formatRestResult(RestResult.failedWithErrorMessage(CommonCode.PROGRAM_EXECUTION_EXCEPTION.getErrorCode(), e.getMessage()));
     }
 
     /**
      * Illegal argument exception
      *
-     * @param e
-     *            Exception
+     * @param e Exception
      * @return Unified response
      */
     @ExceptionHandler(value = IllegalArgumentException.class)
     public RestResult<Object> illegalArgumentExceptionHandler(IllegalArgumentException e) {
         LOGGER.error("Error during inspection，Cause of error：【{}】,TraceId：【{}】", e.getMessage(),
-            CommonUtil.getTraceId(), e);
+                CommonUtil.getTraceId(), e);
         return CommonUtil.formatRestResult(
-            RestResult.failedWithErrorMessage(CommonCode.ILLEGAL_ARGUMENT_ERROR.getErrorCode(), e.getMessage()));
+                RestResult.failedWithErrorMessage(CommonCode.ILLEGAL_ARGUMENT_ERROR.getErrorCode(), e.getMessage()));
     }
 
     /**
      * Exception
      *
-     * @param e
-     *            Exception
+     * @param e Exception
      * @return Unified response
      */
     @ExceptionHandler(Exception.class)
