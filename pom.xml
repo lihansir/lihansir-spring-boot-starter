@@ -10,7 +10,7 @@
 
     <name>${project.artifactId}</name>
     <url>https://github.com/lihansir/lihansir-spring-boot-starter</url>
-    <description>Lihansir springboot starter of cloud platform</description>
+    <description>lihansir springboot starter of cloud platform</description>
 
     <developers>
         <developer>
