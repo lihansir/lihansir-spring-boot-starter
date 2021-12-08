@@ -4,6 +4,7 @@
 
 package com.lihansir.platform.starter.autoconfigure;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +27,7 @@ import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class LiHanSirCloudAutoConfiguration {
 
     /**
@@ -34,6 +35,7 @@ public class LiHanSirCloudAutoConfiguration {
      */
     @Configuration
     @ConditionalOnClass(RedisOperations.class)
+    @ConditionalOnBean(RedisConnectionFactory.class)
     protected static class CloudRedisAutoConfiguration {
         @Bean
         @Primary

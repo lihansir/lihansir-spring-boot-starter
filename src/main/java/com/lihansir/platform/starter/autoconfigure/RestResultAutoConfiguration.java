@@ -15,7 +15,7 @@ import com.lihansir.platform.starter.resolver.GlobalErrorViewResolver;
  *
  * @author <a href="https://www.lihansir.com">Li Han</a>
  */
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class RestResultAutoConfiguration {
 
     @Bean
