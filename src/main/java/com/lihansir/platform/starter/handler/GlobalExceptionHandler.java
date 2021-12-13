@@ -8,6 +8,7 @@ import cn.hutool.core.util.ArrayUtil;
 import com.lihansir.platform.common.code.CommonCode;
 import com.lihansir.platform.common.exception.BusinessException;
 import com.lihansir.platform.common.exception.ParamException;
+import com.lihansir.platform.common.exception.WithDataException;
 import com.lihansir.platform.common.rest.RestResult;
 import com.lihansir.platform.starter.utils.CommonUtil;
 import org.slf4j.Logger;
@@ -45,6 +46,19 @@ public class GlobalExceptionHandler {
         LOGGER.error("Business processing error，Error status code：【{}】,TraceId：【{}】,Cause of error：【{}】",
                 e.getErrorCode(), CommonUtil.getTraceId(), e.getErrorMessage(), e);
         return CommonUtil.formatRestResult(RestResult.failedWithErrorMessage(e.getErrorCode(), e.getErrorMessage()));
+    }
+
+    /**
+     * with data exception
+     *
+     * @param e Exception
+     * @return Unified response
+     */
+    @ExceptionHandler(WithDataException.class)
+    public RestResult<Object> withDataException(WithDataException e) {
+        LOGGER.error("with data error，Error status code：【{}】,TraceId：【{}】,Cause of error：【{}】",
+                e.getErrorCode(), CommonUtil.getTraceId(), e.getErrorMessage(), e);
+        return CommonUtil.formatRestResult(RestResult.failed(e.getErrorCode(), e.getErrorMessage(), e.getData()));
     }
 
     /**
