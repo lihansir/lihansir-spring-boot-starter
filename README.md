@@ -25,20 +25,20 @@ Just need two annotations
 ```
 @EnableRestResult  // Enable the uniform response
 @SpringBootApplication
-public class CloudPayApplication {
+public class DemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CloudPayApplication.class, args);
+        SpringApplication.run(DemoApplication.class, args);
     }
 
 }
 
 @UseRestResult
 @RestController
-public class PayController {}
+public class DemoController {}
 
 @RestController
-public class PayController {
+public class DemoController {
 
     @UseRestResult
     @PostMapping("create")
@@ -51,9 +51,13 @@ public class PayController {
 Then all interfaces will return with a uniform response, like this
 ```
 {
-    code: 200,
-    msg: "success",
-    data: {}  // can be any object,such as String、List、Number...
+    "data": {}  // can be any object,such as String、List、Number...
+    "errorCode": "success",
+    "errorMessage": "success",
+    "host": "127.0.0.1",
+    "showType": 4,
+    "success": true,
+    "traceId": "04f3a87c-0d15-4832-8573-6676ea96546e"
 }
 ```
 You can use `@UseRestResult` on type or method
@@ -70,9 +74,13 @@ You can use `@UseRestResult` on type or method
 All exceptions will be caught and returned using a unified response
 ```
 {
-    code: 30001, // error code
-    msg: "error msg",
-    data: null
+    "success": false,
+    "data": null,
+    "errorCode": "errorCode",
+    "errorMessage": "errorMessage",
+    "showType": 4,
+    "traceId": "f07a25e9-f4aa-4f75-8eb7-41d6402d70e5",
+    "host": "127.0.0.1"
 }
 ```
 
@@ -83,49 +91,44 @@ You can implement `RestCode` to extended custom exception code
 ```
 public enum CommonCode implements RestCode {
 
-    OK(200, "success"),
+    FAILED("request_failed", "failed"),
 
-    ERROR_TOKEN(4001, "Token verification failed"),
+    PARAM_CHECK_ERROR("param_check_error", "Parameter verification failed"),
 
-    PARAM_CHECK_ERROR(4002, "Parameter verification failed"),
+    SERVLET_ERROR("bad_request", "Bad request"),
 
-    REQUEST_METHOD_ERROR(4003, "Unsupported request method"),
+    ERROR_URL("request_path_not_found", "Request path error"),
 
-    ERROR_URL(4004, "Request path error"),
+    BUSINESS_EXECUTE_ERROR("business_execute_error", "Business logic processing exception"),
 
-    BUSINESS_EXECUTE_ERROR(4005, "Business logic processing exception"),
+    ILLEGAL_ARGUMENT_ERROR("illegal_argument_error", "Illegal argument error"),
 
-    ILLEGAL_ARGUMENT_ERROR(4006, "Illegal argument error"),
+    PROGRAM_EXECUTION_EXCEPTION("program_execution_exception", "Program execution exception");
 
-    SERVER_ERROR(5000, "Server error"),
+    private final String errorCode;
 
-    REDIRECT_ERROR(5001, "Error in request redirection"),
+    private final String errorMessage;
 
-    FAILED(50000, "failed");
-
-    private final int code;
-
-    private final String msg;
-
-    CommonCode(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
+    CommonCode(String errorCode, String errorMessage) {
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
     }
 
     @Override
-    public int getCode() {
-        return this.code;
+    public String getErrorCode() {
+        return this.errorCode;
     }
 
     @Override
-    public String getMsg() {
-        return this.msg;
+    public String getErrorMessage() {
+        return this.errorMessage;
     }
+    
 }
 ```
 
 ```
-throw new BusinessException(CommonCode.ERROR_TOKEN);
+throw new BusinessException(CommonCode.PARAM_CHECK_ERROR);
 ```
 
 Finally, I invite you to pay attention to my personal website:
