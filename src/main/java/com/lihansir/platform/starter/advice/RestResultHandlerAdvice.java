@@ -87,7 +87,7 @@ public class RestResultHandlerAdvice implements ResponseBodyAdvice<Object> {
      */
     private Object formatResponse(Object body, MethodParameter methodParameter, ServerHttpResponse response) {
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        RestResult<Object> restResponse = RestResult.builder().success(true).data(JSONObject.toJSON(body)).build();
+        RestResult<Object> restResponse = RestResult.builder().success(true).data(body).build();
         CommonUtil.formatRestResult(restResponse);
         Class<?> parameterType = methodParameter.getParameterType();
         if (String.class == parameterType) {
