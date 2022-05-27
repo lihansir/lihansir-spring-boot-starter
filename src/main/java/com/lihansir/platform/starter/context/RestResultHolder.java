@@ -9,14 +9,14 @@ import cn.hutool.core.util.StrUtil;
  */
 public class RestResultHolder {
 
-    private static final ThreadLocal<String> TRACE_ID = new ThreadLocal<>();
+    private static final ThreadLocal<String> TRACE_ID = new InheritableThreadLocal<>();
 
-    private static final ThreadLocal<String> HOST = new ThreadLocal<>();
+    private static final ThreadLocal<String> HOST = new InheritableThreadLocal<>();
 
     /**
      * error display type： 0 silent; 1 message.warn; 2 message.error; 4 notification; 9 page
      */
-    private static final ThreadLocal<Integer> ERROR_SHOW_TYPE = ThreadLocal.withInitial(() -> 4);
+    private static final ThreadLocal<Integer> ERROR_SHOW_TYPE = InheritableThreadLocal.withInitial(() -> 4);
 
     public static void setTraceId(String traceId) {
         TRACE_ID.set(traceId);
