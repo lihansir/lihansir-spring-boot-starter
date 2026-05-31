@@ -13,7 +13,7 @@ Introducing dependencies to your pom.xml
 ```
 [click here to find the latest version](https://mvnrepository.com/artifact/com.lihansir.platform/lihansir-spring-boot-starter)
 
-Just need two annotations
+Just need two annotations.
 
 ```
 @EnableRestResult 
